@@ -42,5 +42,9 @@ public class RegistrationService {
         return saveStudent;
     }
 
+    public Mono delete(final String id){
+        return registrationRepository.deleteById(id);
+    }
+
 }
 

@@ -34,4 +34,9 @@ public class RegistrationController {
         return registrationService.update(id, student);
     }
 
+    @DeleteMapping("{id}")
+    public Mono delete(@PathVariable String id){
+        return registrationService.delete(id);
+    }
+
 }
