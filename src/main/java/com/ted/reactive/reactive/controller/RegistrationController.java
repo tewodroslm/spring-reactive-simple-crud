@@ -24,4 +24,14 @@ public class RegistrationController {
         return registrationService.getAll();
     }
 
+    @GetMapping("/id")
+    public Mono<Student> getById(@RequestParam String id){
+        return registrationService.getById(id);
+    }
+
+    @PutMapping("/update/{id}")
+    public Mono updateById(@PathVariable String id, @RequestBody Student student){
+        return registrationService.update(id, student);
+    }
+
 }

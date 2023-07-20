@@ -8,6 +8,9 @@ import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.Arrays;
+import java.util.List;
+
 @Service
 @Transactional
 public class RegistrationService {
@@ -21,6 +24,22 @@ public class RegistrationService {
 
     public Mono save(final Student student){
         return registrationRepository.save(student);
+    }
+
+    public Mono<Student> getById(String id){
+        return registrationRepository.findById(id);
+    }
+
+    public Mono update(final String id, Student student){
+        Mono<Student> studentMono = registrationRepository.findById(id);
+        Mono<Student> updateStudent = studentMono.map(student1 -> {
+            student1.setFirstName(student.getFirstName());
+            student1.setLastName(student.getLastName());
+            return student1;
+        });
+        Mono<Student> saveStudent = updateStudent.flatMap(registrationRepository::save);
+        saveStudent.subscribe();
+        return saveStudent;
     }
 
 }
